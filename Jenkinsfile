@@ -6,7 +6,7 @@ pipeline {
         stage('Pull Latest Code') {
             steps {
                 sh '''
-                cd /home/root/git-content
+                cd /root/git-content
                 git checkout develop
                 git pull origin develop
                 '''
@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy to Apache') {
             steps {
                 sh '''
-                sudo cp /home/root/git-content/index.html /var/www/html/index.html
+                sudo cp /root/git-content/index.html /var/www/html/index.html
                 '''
             }
         }
