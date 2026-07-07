@@ -6,7 +6,7 @@ pipeline {
         stage('Pull Latest Code') {
             steps {
                 sh '''
-                cd /root/git-content
+                cd /var/lib/jenkins/git-content
                 git checkout develop
                 git pull origin develop
                 '''
@@ -16,7 +16,13 @@ pipeline {
         stage('Deploy to Apache') {
             steps {
                 sh '''
-                sudo cp /root/git-content/index.html /var/www/html/index.html
+                cp /var/lib/jenkins/git-content/index.html /var/www/html/index.html
+                '''
+            }
+        }
+
+    }
+}
                 '''
             }
         }
