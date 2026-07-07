@@ -1,37 +1,23 @@
 pipeline {
     agent any
 
-    environment {
-        DESTINATION = "/var/lib/jenkins/git-content"
-    }
-
     stages {
-
-        stage('Copy Git Content') {
+        stage('Pull Latest Code') {
             steps {
                 sh '''
-                mkdir -p ${DESTINATION}
-                cp -rf * ${DESTINATION}/
+                cd /path/to/git-content
+                git checkout develop
+                git pull origin develop
                 '''
             }
         }
 
-        stage('Deploy to Apache') {
+        stage('Deploy') {
             steps {
                 sh '''
-                sudo cp ${DESTINATION}/index.html /var/www/html/index.html
+                sudo cp /path/to/git-content/index.html /var/www/html/index.html
                 '''
             }
-        }
-
-    }
-
-    post {
-        success {
-            echo 'Deployment completed successfully.'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
