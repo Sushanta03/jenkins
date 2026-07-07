@@ -7,6 +7,7 @@ pipeline {
                 sh '''
                 cd /var/lib/jenkins/git-content
                 git checkout develop
+                git config --global --add safe.directory /var/lib/jenkins/git-content
                 git pull origin develop
                 '''
             }
