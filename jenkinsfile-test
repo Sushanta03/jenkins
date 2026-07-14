@@ -1,0 +1,30 @@
+pipeline {
+
+    agent {
+        label 'test'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'test',
+                    url: 'https://github.com/Sushanta03/jenkins.git'
+            }
+        }
+
+        stage('Deploy to Test') {
+            steps {
+
+                sh '''
+                sudo mkdir -p /var/www/html
+
+                sudo cp -r * /var/www/html/
+
+                '''
+            }
+        }
+
+    }
+
+}
