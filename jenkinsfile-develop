@@ -1,0 +1,48 @@
+pipeline {
+    agent none
+
+    stages {
+
+        stage('Deploy to Test') {
+            agent {
+                label 'test'
+            }
+
+            steps {
+                checkout scm
+
+                sh '''
+                echo "Deploying to Test Server..."
+                sudo cp -r ./* /var/www/html/
+                hostname
+                '''
+            }
+        }
+
+        stage('Deploy to Production') {
+            agent {
+                label 'production'
+            }
+
+            steps {
+                checkout scm
+
+                sh '''
+                echo "Deploying to Production Server..."
+                sudo cp -r ./* /var/www/html/
+                hostname
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment completed successfully!'
+        }
+
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
+}
