@@ -1,0 +1,30 @@
+pipeline {
+
+    agent {
+        label 'production'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/Sushanta03/jenkins.git'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+
+                sh '''
+                sudo mkdir -p /var/www/html
+
+                sudo cp -r * /var/www/html/
+
+                '''
+            }
+        }
+
+    }
+
+}
